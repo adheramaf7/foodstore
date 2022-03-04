@@ -5,12 +5,17 @@ import TopBar from '../../components/TopBar';
 import menus from './menus';
 import { config } from './../../config';
 import { fetchProducts, setPage, goToNextPage, goToPrevPage, setKeyword, setCategory, toggleTag } from './../../features/Products/actions';
+import { addItem, removeItem } from '../../features/Cart/actions';
 import BounceLoader from 'react-spinners/BounceLoader';
 import { tags } from './tags';
+import Cart from '../../components/Cart';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
   let dispatch = useDispatch();
+  let navigate = useNavigate();
   let products = useSelector((state) => state.products);
+  let cart = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -22,7 +27,7 @@ export default function Home() {
         {products.data.map((product, index) => {
           return (
             <div key={index} className="p-2">
-              <CardProduct title={product.name} imgUrl={`${config.api_host}/upload/${product.image_url}`} price={product.price} onAddToCart={(_) => null} />
+              <CardProduct title={product.name} imgUrl={`${config.api_host}/upload/${product.image_url}`} price={product.price} onAddToCart={(_) => dispatch(addItem(product))} />
             </div>
           );
         })}
@@ -64,7 +69,9 @@ export default function Home() {
         ) : null}
         {productCardList}
       </div>
-      <div className="w-full md:w-1/4 h-full shadow-lg border-r border-white bg-gray-100">Keranjang belanja di sini</div>
+      <div className="w-full md:w-1/4 h-full shadow-lg border-r border-white bg-gray-100">
+        <Cart items={cart} onItemInc={(item) => dispatch(addItem(item))} onItemDec={(item) => dispatch(removeItem(item))} onCheckout={(_) => navigate('/checkout')} />
+      </div>
     </div>
   );
 

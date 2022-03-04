@@ -13,10 +13,12 @@ import Register from './pages/Register';
 import RegisterSuccess from './pages/RegisterSuccess';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
+import { getCart } from './api/cart';
 
 function App() {
   React.useEffect(() => {
     listen();
+    getCart();
   }, []);
 
   return (
