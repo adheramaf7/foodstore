@@ -49,6 +49,13 @@ export const toggleTag = (tag) => {
   };
 };
 
+export const setPage = (number = 1) => {
+  return {
+    type: SET_PAGE,
+    currentPage: number,
+  };
+};
+
 export const goToNextPage = () => {
   return {
     type: NEXT_PAGE,
@@ -81,11 +88,12 @@ export const fetchProducts = () => {
 
     try {
       let {
-        data: { products, count },
+        data: { data, count },
       } = await debouncedFetchProducts(params);
 
-      dispatch(successFetchingProducts({ products, count }));
+      dispatch(successFetchingProducts({ data, count }));
     } catch (err) {
+      console.error(err);
       dispatch(errorFetchingProducts());
     }
   };
