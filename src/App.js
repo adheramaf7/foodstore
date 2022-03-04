@@ -10,6 +10,8 @@ import { listen } from './app/listener';
 //pages
 import Home from './pages/Home';
 import Register from './pages/Register';
+import RegisterSuccess from './pages/RegisterSuccess';
+import NotFound from './pages/NotFound';
 
 function App() {
   React.useEffect(() => {
@@ -21,6 +23,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register/success" element={<RegisterSuccess />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Provider>
   );

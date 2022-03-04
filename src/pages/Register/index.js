@@ -1,8 +1,10 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button, Card, FormControl, InputPassword, InputText, LayoutOne } from 'upkit';
 import { rules } from './validation';
 import * as authApi from './../../api/auth';
+import StoreLogo from '../../components/StoreLogo';
 
 const statuslist = {
   idle: 'idle',
@@ -12,6 +14,7 @@ const statuslist = {
 };
 
 export default function Register() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -45,11 +48,16 @@ export default function Register() {
     }
 
     setStatus(statuslist.success);
+
+    navigate('/register/success');
   };
 
   return (
     <LayoutOne size="small">
       <Card color="white">
+        <div className="text-center mb-5">
+          <StoreLogo />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl errorMessage={errors.full_name?.message}>
             <InputText name="full_name" placeholder="Nama Lengkap" fitContainer {...register('full_name', rules.full_name)} />
@@ -67,6 +75,12 @@ export default function Register() {
             {status === statuslist.process ? 'Sedang memproses' : 'Mendaftar'}
           </Button>
         </form>
+        <div className="text-center mt-2">
+          Sudah punya akun?{' '}
+          <Link to="/login">
+            <b> Login Sekarang. </b>{' '}
+          </Link>
+        </div>
       </Card>
     </LayoutOne>
   );
