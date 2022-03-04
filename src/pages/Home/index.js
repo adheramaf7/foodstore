@@ -11,7 +11,7 @@ export default function Home() {
   );
   return (
     <div>
-      <LayoutSidebar sidebar={<SideNav items={menus} verticalAlign="top" />} content={content} sidebarSize="80" />
+      <LayoutSidebar sidebar={<SideNav items={menus} verticalAlign="top" />} content={content} sidebarSize={80} />
     </div>
   );
 }
