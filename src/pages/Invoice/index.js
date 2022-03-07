@@ -13,7 +13,7 @@ export default function Invoice() {
   let [error, setError] = React.useState('');
   let [status, setStatus] = React.useState('process');
 
-  let { params } = useParams();
+  let params = useParams();
 
   React.useEffect(() => {
     getInvoiceByOrderId(params?.order_id)
@@ -22,6 +22,8 @@ export default function Invoice() {
         if (data?.error) {
           setError(data.message || 'Terjadi kesalahan yang tidak diketahui');
         }
+
+        setInvoice(data);
       })
       .finally(() => setStatus('idle'));
   }, []);
@@ -47,6 +49,8 @@ export default function Invoice() {
       </LayoutOne>
     );
   }
+
+  console.log(invoice);
 
   return (
     <LayoutOne>
