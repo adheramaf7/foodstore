@@ -4,7 +4,7 @@ import TopBar from '../../components/TopBar';
 import FaCartPlus from '@meronex/icons/fa/FaCartPlus';
 import FaAddressCard from '@meronex/icons/fa/FaAddressCard';
 import FaInfoCircle from '@meronex/icons/fa/FaInfoCircle';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { formatRupiah } from '../../utils/format-rupiah';
 import { config } from '../../config';
 import { sumPrice } from '../../utils/sum-price';
@@ -12,14 +12,17 @@ import FaArrowRight from '@meronex/icons/fa/FaArrowRight';
 import FaArrowLeft from '@meronex/icons/fa/FaArrowLeft';
 import FaRegCheckCircle from '@meronex/icons/fa/FaRegCheckCircle';
 import { useAddressData } from '../../hooks/delivery-address';
-import { Link } from 'react-router-dom';
-
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { createOrder } from '../../api/order';
+import { clearItems } from '../../features/Cart/actions';
 
 export default function Checkout() {
   let [activeStep, setActiveStep] = React.useState(0);
   let cart = useSelector((state) => state.cart);
   let { data, status, limit, page, count, setPage } = useAddressData();
   let [selectedAddress, setSelectedAddress] = React.useState(null);
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
 
   const IconWrapper = ({ children }) => {
     return <div className="text-3xl flex justify-center">{children}</div>;
@@ -96,6 +99,25 @@ export default function Checkout() {
       ),
     },
   ];
+
+  async function handleCreateOrder() {
+    let payload = {
+      delivery_fee: config.global_ongkir,
+      delivery_address: selectedAddress._id,
+    };
+    // (1) kirimkan `payload` ke Web API untuk membuat order baru
+    let { data } = await createOrder(payload);
+
+    if (data?.error) return;
+
+    navigate(`/invoice/${data._id}`);
+
+    dispatch(clearItems());
+  }
+
+  if (!cart.length) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <LayoutOne>
@@ -188,7 +210,7 @@ export default function Checkout() {
               </Button>
             </div>
             <div className="text-right">
-              <Button color="red" size="large" iconBefore={<FaRegCheckCircle />}>
+              <Button color="red" size="large" iconBefore={<FaRegCheckCircle />} onClick={handleCreateOrder}>
                 Bayar
               </Button>
             </div>

@@ -17,6 +17,7 @@ import { getCart } from './api/cart';
 import UserAddressAdd from './pages/UserAddressAdd';
 import UserAddress from './pages/UserAddress';
 import Checkout from './pages/Checkout';
+import Invoice from './pages/Invoice';
 
 function App() {
   React.useEffect(() => {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/delivery-address" element={<UserAddress />} />
         <Route path="/delivery-address/create" element={<UserAddressAdd />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/invoice/:order_id" element={<Invoice />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Provider>
