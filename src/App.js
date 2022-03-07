@@ -14,6 +14,9 @@ import RegisterSuccess from './pages/RegisterSuccess';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import { getCart } from './api/cart';
+import UserAddressAdd from './pages/UserAddressAdd';
+import UserAddress from './pages/UserAddress';
+import Checkout from './pages/Checkout';
 
 function App() {
   React.useEffect(() => {
@@ -28,6 +31,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/success" element={<RegisterSuccess />} />
+        <Route path="/delivery-address" element={<UserAddress />} />
+        <Route path="/delivery-address/create" element={<UserAddressAdd />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Provider>

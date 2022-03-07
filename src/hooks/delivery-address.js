@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAddress } from '../api/address';
+import { getAddress } from './../api/delivery-address';
 
 const statuslist = {
   idle: 'idle',

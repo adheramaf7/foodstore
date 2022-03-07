@@ -19,13 +19,13 @@ export default function SelectWilayah({ tingkat, kodeInduk, onChange, value }) {
   return <Select options={data.map((wilayah) => ({ label: wilayah.nama, value: wilayah.kode }))} onChange={onChange} value={value} isLoading={isFetching} isDisabled={isFetching || !data.length} />;
 }
 
+SelectWilayah.defaultProps = {
+  tingkat: 'provinsi',
+};
+
 SelectWilayah.propTypes = {
   tingkat: oneOf(['provinsi', 'kabupaten', 'kecamatan', 'desa']),
   kodeInduk: oneOfType([number, string]),
   onChange: func,
   value: shape({ label: string, value: oneOfType([string, number]) }),
-};
-
-SelectWilayah.defaultProps = {
-  tingkat: 'provinsi',
 };
