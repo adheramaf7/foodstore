@@ -26,7 +26,7 @@ export default function Invoice() {
         setInvoice(data);
       })
       .finally(() => setStatus('idle'));
-  }, []);
+  }, [params?.order_id]);
 
   if (error.length) {
     return (
@@ -49,8 +49,6 @@ export default function Invoice() {
       </LayoutOne>
     );
   }
-
-  console.log(invoice);
 
   return (
     <LayoutOne>

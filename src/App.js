@@ -18,6 +18,7 @@ import UserAddressAdd from './pages/UserAddressAdd';
 import UserAddress from './pages/UserAddress';
 import Checkout from './pages/Checkout';
 import Invoice from './pages/Invoice';
+import UserAccount from './pages/UserAccount';
 
 function App() {
   React.useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/my-account" element={<UserAccount />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/register/success" element={<RegisterSuccess />} />
