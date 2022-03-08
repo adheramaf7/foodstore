@@ -55,32 +55,34 @@ export default function Register() {
   return (
     <LayoutOne size="small">
       <Card color="white">
-        <div className="text-center mb-5">
-          <StoreLogo />
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl errorMessage={errors.full_name?.message}>
-            <InputText name="full_name" placeholder="Nama Lengkap" fitContainer {...register('full_name', rules.full_name)} />
-          </FormControl>
-          <FormControl errorMessage={errors.email?.message}>
-            <InputText name="email" placeholder="Email" fitContainer {...register('email', rules.email)} />
-          </FormControl>
-          <FormControl errorMessage={errors.password?.message}>
-            <InputPassword name="password" placeholder="Password" fitContainer {...register('password', rules.password)} />
-          </FormControl>
-          <FormControl errorMessage={errors.password_confirmation?.message}>
-            <InputPassword name="password_confirmation" placeholder="Konfirmasi Password" fitContainer {...register('password_confirmation', rules.password_confirmation)} />
-          </FormControl>
-          <Button size="large" fitContainer disabled={status === statuslist.process}>
-            {status === statuslist.process ? 'Sedang memproses' : 'Mendaftar'}
-          </Button>
-        </form>
-        <div className="text-center mt-2">
-          Sudah punya akun?{' '}
-          <Link to="/login">
-            <b> Login Sekarang. </b>{' '}
-          </Link>
-        </div>
+        <>
+          <div className="text-center mb-5">
+            <StoreLogo />
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl errorMessage={errors.full_name?.message}>
+              <InputText name="full_name" placeholder="Nama Lengkap" fitContainer {...register('full_name', rules.full_name)} />
+            </FormControl>
+            <FormControl errorMessage={errors.email?.message}>
+              <InputText name="email" placeholder="Email" fitContainer {...register('email', rules.email)} />
+            </FormControl>
+            <FormControl errorMessage={errors.password?.message}>
+              <InputPassword name="password" placeholder="Password" fitContainer {...register('password', rules.password)} />
+            </FormControl>
+            <FormControl errorMessage={errors.password_confirmation?.message}>
+              <InputPassword name="password_confirmation" placeholder="Konfirmasi Password" fitContainer {...register('password_confirmation', rules.password_confirmation)} />
+            </FormControl>
+            <Button size="large" fitContainer disabled={status === statuslist.process}>
+              {status === statuslist.process ? 'Sedang memproses' : 'Mendaftar'}
+            </Button>
+          </form>
+          <div className="text-center mt-2">
+            Sudah punya akun?{' '}
+            <Link to="/login">
+              <b> Login Sekarang. </b>{' '}
+            </Link>
+          </div>
+        </>
       </Card>
     </LayoutOne>
   );

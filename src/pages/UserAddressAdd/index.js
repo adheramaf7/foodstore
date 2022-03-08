@@ -14,7 +14,6 @@ export default function UserAddressAdd() {
     register,
     formState: { errors },
     setValue,
-    setError,
     getValues,
     watch,
   } = useForm();
@@ -45,8 +44,6 @@ export default function UserAddressAdd() {
   const updateValue = (field, value) => setValue(field, value, { shouldValidate: true, shouldDirty: true });
 
   const onSubmit = async (formData) => {
-    console.log(formData);
-
     let payload = {
       nama: formData.nama_alamat,
       detail: formData.detail_alamat,

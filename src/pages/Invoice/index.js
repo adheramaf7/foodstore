@@ -1,17 +1,21 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { LayoutOne, Table, Text } from 'upkit';
+import { Button, LayoutOne, Table, Text } from 'upkit';
 import { getInvoiceByOrderId } from '../../api/order';
 import TopBar from '../../components/TopBar';
 import StatusLabel from '../../components/StatusLabel';
 import BounceLoader from 'react-spinners/BounceLoader';
 import { config } from '../../config';
 import { formatRupiah } from '../../utils/format-rupiah';
+import axios from 'axios';
 
 export default function Invoice() {
   let [invoice, setInvoice] = React.useState(null);
   let [error, setError] = React.useState('');
   let [status, setStatus] = React.useState('process');
+
+  let [initiatingPayment, setInitiating] = React.useState(false);
+  let [requestError, setRequestError] = React.useState(false);
 
   let params = useParams();
 
@@ -27,6 +31,39 @@ export default function Invoice() {
       })
       .finally(() => setStatus('idle'));
   }, [params?.order_id]);
+
+  React.useEffect(() => {
+    //change this to the script source you want to load, for example this is snap.js sandbox env
+    const midtransScriptUrl = 'https://app.sandbox.midtrans.com/snap/snap.js';
+    //change this according to your client-key
+    const myMidtransClientKey = 'SB-Mid-client-E4zlYjBZbNpaA4Ax';
+
+    let scriptTag = document.createElement('script');
+    scriptTag.src = midtransScriptUrl;
+    // optional if you want to set script attribute
+    // for example snap.js have data-client-key attribute
+    scriptTag.setAttribute('data-client-key', myMidtransClientKey);
+
+    document.body.appendChild(scriptTag);
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
+
+  let handlePayment = async function () {
+    setInitiating(true);
+    let {
+      data: { token },
+    } = await axios.get(`${config.api_host}/api/invoices/${params?.order_id}/initiate-payment`);
+
+    if (!token) {
+      setRequestError(true);
+      return;
+    }
+
+    setInitiating(false);
+    window.snap.pay(token);
+  };
 
   if (error.length) {
     return (
@@ -90,6 +127,14 @@ export default function Invoice() {
             ),
           },
         ]}></Table>
+
+      <br />
+      {invoice.payment_status !== 'paid' ? (
+        <Button onClick={handlePayment} disabled={initiatingPayment}>
+          {' '}
+          {initiatingPayment ? 'Loading ... ' : 'Bayar dengan Midtrans'}
+        </Button>
+      ) : null}
     </LayoutOne>
   );
 }

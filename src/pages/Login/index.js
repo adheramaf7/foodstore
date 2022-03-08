@@ -19,7 +19,6 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
     setError,
   } = useForm();
@@ -54,29 +53,31 @@ export default function Login() {
     <LayoutOne size="small">
       <br />
       <Card color="white">
-        <div className="text-center mb-5">
-          <StoreLogo />
-        </div>
+        <>
+          <div className="text-center mb-5">
+            <StoreLogo />
+          </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl errorMessage={errors.email?.message}>
-            <InputText placeholder="Email" fitContainer name="email" {...register('email', rules.email)} />
-          </FormControl>
-          <FormControl errorMessage={errors.password?.message}>
-            <InputPassword placeholder="Password" fitContainer name="password" {...register('password', rules.password)} />
-          </FormControl>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <FormControl errorMessage={errors.email?.message}>
+              <InputText placeholder="Email" fitContainer name="email" {...register('email', rules.email)} />
+            </FormControl>
+            <FormControl errorMessage={errors.password?.message}>
+              <InputPassword placeholder="Password" fitContainer name="password" {...register('password', rules.password)} />
+            </FormControl>
 
-          <Button fitContainer size="large" disabled={status === 'process'}>
-            Login
-          </Button>
-        </form>
+            <Button fitContainer size="large" disabled={status === 'process'}>
+              Login
+            </Button>
+          </form>
 
-        <div className="text-center mt-2">
-          Belum punya akun?{' '}
-          <Link to="/register">
-            <b>Daftar sekarang.</b>
-          </Link>
-        </div>
+          <div className="text-center mt-2">
+            Belum punya akun?{' '}
+            <Link to="/register">
+              <b>Daftar sekarang.</b>
+            </Link>
+          </div>
+        </>
       </Card>
     </LayoutOne>
   );

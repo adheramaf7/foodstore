@@ -34,7 +34,6 @@ function App() {
     <Provider store={store}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
         <Route
           path="/login"
           element={
@@ -117,6 +116,7 @@ function App() {
             </GuardRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Provider>
   );
